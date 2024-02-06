@@ -4,6 +4,9 @@ defmodule ElixirFeedParser.XmlNode do
   # for Record definitions of xmlElement, xmlAttribute, xmlText
 
   def parse_string(xml_string, options \\ [quiet: true]) do
+    scan_options = Application.get_env(:elixir_feed_parser, :scan_options, [])
+    options = Keyword.merge(options, scan_options)
+    
     {doc, []} = xml_string |> :binary.bin_to_list |> :xmerl_scan.string(options)
     doc
   end
